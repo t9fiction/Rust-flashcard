@@ -1,93 +1,107 @@
-# Flashcard App for Learning Rust
+# Rust Flashcard App
 
-Welcome to the **Rust Flashcard App**! This app is designed to help you learn and reinforce your knowledge of Rust programming through interactive flashcards. Whether you're a beginner or someone looking to solidify your Rust skills, this app provides a quick and effective way to practice key Rust concepts.
+## Overview
+This is a simple flashcard application written in Rust. The app allows users to create, manage, and quiz themselves on flashcards. It provides two modes: **Admin mode** (where users can manage categories and flashcards) and **User mode** (where users can only take quizzes and view categories). The flashcards are stored in categories, and all data is saved to a JSON file for persistence across sessions.
 
 ## Features
+- **Add, Remove, List Categories**: Admin users can manage categories.
+- **Add, Remove Flashcards**: Admin users can add/remove flashcards in each category.
+- **Quiz Yourself**: Users can take quizzes based on the flashcards in a category.
+- **Save and Load**: Flashcards and categories are stored in a JSON file and loaded when the app starts.
+- **Category Management**: Admin can manage categories and their flashcards.
 
-- **Interactive Flashcards**: Browse through a collection of flashcards covering various Rust topics.
-- **Category-Based Organization**: Categories help organize flashcards by topics such as syntax, ownership, memory safety, and more.
-- **Results Tracking**: Track your quiz results and see your progress.
-- **Responsive Design**: The app is designed to be user-friendly, with responsive layouts to work on different screen sizes.
-- **Simple UI/UX**: Easy to navigate through flashcards, with a clean design for focused learning.
+## Prerequisites
+- Rust 1.56.0 or higher
+- Cargo (Rust's package manager)
 
 ## Installation
 
-To run this app locally, follow the instructions below.
+1. Clone the repository:
 
-### Prerequisites
+```bash
+git clone https://github.com/t9fiction/Rust-flashcard.git
+cd Rust-flashcard
+```
 
-- Node.js and npm (or yarn) installed on your system.
-- Basic understanding of HTML, CSS, JavaScript, and React.
+2. Install dependencies and run the app:
 
-### Steps to Run Locally
+```bash
+cargo run
+```
 
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/t9fiction/Rust-flashcard.git
-   ```
-
-2. **Navigate into the project directory:**
-
-   ```bash
-   cd Rust-flashcard
-   ```
-
-3. **Install dependencies:**
-
-   Using npm:
-
-   ```bash
-   npm install
-   ```
-
-   Or using yarn:
-
-   ```bash
-   yarn install
-   ```
-
-4. **Run the app:**
-
-   ```bash
-   npm start
-   ```
-
-   Or with yarn:
-
-   ```bash
-   yarn start
-   ```
-
-   The app will open in your browser at `http://localhost:3000`.
+This will start the application.
 
 ## Usage
 
-- **Categories**: The flashcards are divided into categories. You can view and select different categories like "Rust Basics", "Ownership", "Lifetimes", etc.
-- **Flashcards**: Each flashcard displays a question about Rust, and you can click to reveal the answer. 
-- **Quiz Mode**: After going through the flashcards, you can test your knowledge by taking a quiz. The quiz will display a series of questions, and you will select the correct answer.
-- **Results**: Once you finish the quiz, your score and correct/incorrect answers will be displayed.
+### Modes
 
-## Example Flashcard
+#### Admin Mode
+In Admin mode, users can manage categories and flashcards. To switch to Admin mode, choose option **3** in the **User Menu**.
 
-### Question:
-**What is the difference between `String` and `&str` in Rust?**
+Once in Admin mode, the following actions are available:
+1. **Add a new category**: Enter a name for the new category.
+2. **Remove a category**: Enter the name of the category to remove.
+3. **List all categories**: View all existing categories.
+4. **Add a flashcard**: Add a new flashcard to an existing category (question, answer, category).
+5. **Remove a flashcard**: Remove a flashcard from a category by specifying the question.
+6. **Display flashcards in a category**: View all flashcards in a specific category.
+7. **Quiz yourself**: Take a quiz based on flashcards in a category.
+8. **Save flashcards to file**: Save current flashcards and categories to a file.
+9. **Change to user mode**: Switch to User mode where only quizzes can be taken.
 
-### Answer:
-- `String`: A growable, heap-allocated string that is owned and mutable.
-- `&str`: A string slice, which is a reference to a string, usually immutable.
+#### User Mode
+In User mode, users can:
+1. **List all categories**: View a list of all available categories.
+2. **Quiz yourself**: Take a quiz based on flashcards from a specific category.
+3. **Change to Admin mode**: Switch to Admin mode for full control over categories and flashcards.
+
+### Menu Navigation
+The application presents a simple command-line menu system for both Admin and User modes. Select the corresponding number to choose an action.
+
+### File Persistence
+Flashcards and categories are saved in a file named `flashcards.json`. Any updates to categories or flashcards will automatically be saved when exiting or choosing the "Save flashcards to file" option.
+
+## Example
+
+**Admin Menu**:
+```
+Admin Menu:
+1. Add a new category
+2. Remove a category
+3. List all categories
+4. Add a flashcard
+5. Remove a flashcard
+6. Display flashcards in a category
+7. Quiz yourself
+8. Save flashcards to file
+9. Change to user mode
+0. Exit
+```
+
+**User Menu**:
+```
+User Menu:
+1. List all categories
+2. Quiz yourself
+3. Change to Admin mode
+0. Exit
+```
+
+### Example of a Quiz
+
+```text
+Quiz finished! You got 3 correct and 2 incorrect.
+--------------------------------------------------
+```
 
 ## Contributing
-
-If you'd like to contribute to this project, follow these steps:
-
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature-name`).
-3. Make your changes.
-4. Commit your changes (`git commit -m 'Add feature'`).
-5. Push to your branch (`git push origin feature-name`).
-6. Create a pull request.
+If you'd like to contribute to this project, feel free to fork the repository and submit a pull request with your changes.
 
 ## License
-
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+- [serde](https://serde.rs/) for serialization and deserialization of data.
+- [rand](https://crates.io/crates/rand) for shuffling flashcards randomly during quizzes.
+
+---
