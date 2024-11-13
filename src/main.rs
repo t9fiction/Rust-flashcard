@@ -1,6 +1,6 @@
 use rand::seq::SliceRandom;
 use serde::{Deserialize, Serialize};
-use std::collections::{HashMap};
+use std::collections::HashMap;
 use std::fs::{self};
 use std::io::{self, Write};
 
@@ -56,9 +56,28 @@ impl FlashcardCategories {
         if self.categories.is_empty() {
             println!("No categories found!");
         } else {
-            for category in self.categories.keys() {
-                println!("{}", category.to_uppercase());
+            println!("\n{:<5} {:<25}", "No.", "Category"); // Print the header in a tabular form
+            println!("{:-<35}", ""); // A line to separate header from content
+
+            for (index, category) in self.categories.keys().enumerate() {
+                // Capitalize the first letter and lowercase the rest
+                let formatted_category = category.to_lowercase();
+                let formatted_category = formatted_category
+                    .chars()
+                    .enumerate()
+                    .map(|(i, c)| {
+                        if i == 0 {
+                            c.to_uppercase().to_string()
+                        } else {
+                            c.to_string()
+                        }
+                    })
+                    .collect::<String>();
+
+                println!("{:<5} {:<25}", index + 1, formatted_category); // Print the categories in a table
             }
+            // Bottom border after the list
+            println!("{:-<35}", ""); // This line adds the bottom border
         }
     }
 
@@ -97,11 +116,18 @@ impl FlashcardCategories {
                 if flashcards.is_empty() {
                     println!("No flashcards found in category '{}'.", category);
                 } else {
+                    println!("\n{:<5} {:<30} {:<30}", "No.", "Question", "Answer");
+                    println!("{}", "-".repeat(75));
                     for (index, flashcard) in flashcards.iter().enumerate() {
-                        println!("{}. Question: {}", index + 1, flashcard.question);
-                        println!("   Answer: {}", flashcard.answer);
-                        println!("------------------------");
+                        println!(
+                            "{:<5} {:<30} {:<30}",
+                            index + 1,
+                            flashcard.question,
+                            flashcard.answer
+                        );
                     }
+                    // Bottom border after flashcards
+                    println!("{:-<35}", "");
                 }
             }
             None => {
@@ -121,8 +147,11 @@ impl FlashcardCategories {
             let mut rng = rand::thread_rng();
             flashcards.shuffle(&mut rng);
 
-            for flashcard in flashcards {
-                println!("\nQuestion: {}", flashcard.question);
+            println!("\n{:<5} {:<30} {:<30}", "No.", "Question", "Your Answer");
+            println!("{}", "-".repeat(75));
+
+            for (index, flashcard) in flashcards.iter().enumerate() {
+                println!("{:<5} {:<30} ", index + 1, flashcard.question);
                 print!("Your answer: ");
                 io::stdout().flush().unwrap();
 
@@ -132,18 +161,25 @@ impl FlashcardCategories {
                     .expect("Failed to read line");
 
                 if user_answer.trim().to_lowercase() == flashcard.answer.to_lowercase() {
-                    println!("Correct!");
+                    println!("{:<5} {:<30} Correct!", index + 1, flashcard.question);
                     correct_answers += 1;
                 } else {
+                    println!(
+                        "{:<5} {:<30} Incorrect. The correct answer is: {}",
+                        index + 1,
+                        flashcard.question,
+                        flashcard.answer
+                    );
                     wrong_answers += 1;
-                    println!("Incorrect. The correct answer is: {}", flashcard.answer);
                 }
             }
 
             println!(
-                "\nQuiz finished! You got {} correct and {} incorrect.",
+                "\nQuiz finished! You got {:<3} correct and {:<3} incorrect.",
                 correct_answers, wrong_answers
             );
+            // Bottom border after quiz results
+            println!("{:-<50}", "");
         } else {
             println!("Category '{}' not found.", category);
         }
@@ -313,7 +349,7 @@ fn main() {
             println!("\nUser Menu:");
             println!("1. List all categories");
             println!("2. Quiz yourself");
-            println!("3. Change to user mode");
+            println!("3. Change to Admin mode");
             println!("0. Exit");
 
             let mut choice = String::new();
