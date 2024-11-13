@@ -149,12 +149,12 @@ impl FlashcardCategories {
         }
     }
 
-    fn get_flashcards(&self) -> Vec<Flashcard> {
-        self.categories
-            .values()
-            .flat_map(|flashcards| flashcards.clone())
-            .collect()
-    }
+    // fn get_flashcards(&self) -> Vec<Flashcard> {
+    //     self.categories
+    //         .values()
+    //         .flat_map(|flashcards| flashcards.clone())
+    //         .collect()
+    // }
 
     fn load_from_file(&mut self, file_name: &str) {
         match fs::read_to_string(file_name) {
